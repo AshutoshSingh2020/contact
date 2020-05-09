@@ -6,19 +6,21 @@
  }
  session_start();
  error_reporting(0);
- $firstname =$_REQUEST['firstname']; 
- $lastname = $_REQUEST['lastname'];
- $mail = $_REQUEST['mail'];
- $feed = $_REQUEST['feedback'];
+ if(isset($_POST['submit'])){
+    $firstname =$_REQUEST['firstname']; 
+    $lastname = $_REQUEST['lastname'];
+    $mail = $_REQUEST['mail'];
+    $feed = $_REQUEST['feedback'];
+    $sql =mysqli_query($conn,"INSERT INTO `contact`(`First Name`, `Last Name`, `Email  Address`, `Feedback`) VALUES ('$firstname','$lastname','$mail','$feed')");
 
- $sql ="INSERT INTO `contact`(`First Name`, `Last Name`, `Email  Address`, `Feedback`) VALUES ('$firstname','$lastname','$mail','$feed')";
-
-if(mysqli_query($conn, $sql))
-{
-  if($_POST['submit'])
-  {
-  }
-}
+    if($sql)
+    {
+      echo "<script>alert('Thanks You are successfully send the message');</script>";
+    }
+    else
+    {
+      echo "<script>alert('Something went wrong');</script>";
+    }
     $to = "$mail";
     $subject = "Contact Custumer";
     $message = "Hi,
@@ -44,7 +46,9 @@ if(mysqli_query($conn, $sql))
     {
      // echo "Mail send success";
     }
+}
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
